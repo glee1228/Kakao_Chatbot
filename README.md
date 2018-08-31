@@ -10,11 +10,12 @@ http://plus.kakao.com/home/@pythonchatbot3
 </hr>
 
  #### 점심 메뉴 추천 & 로또 추천
- <hr/>
+ <hr>
  <div>
   <img width="500" src="https://user-images.githubusercontent.com/26589942/44921852-ae816400-ad7e-11e8-8ce8-b7eea3c7ad86.png">
-  </div>
-  #### 영화 추천 
+ </div>
+ 
+ #### 영화 추천 
   <hr/>
   <div>
 <img width="500" src="https://user-images.githubusercontent.com/26589942/44921853-ae816400-ad7e-11e8-9c13-31045112eec5.png">
