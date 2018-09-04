@@ -11,11 +11,18 @@ day_tag = result.select('td.bg1')
 day_tag2 = result.select('td.bg0')
 
 r = datetime.datetime.today().weekday()
+hour = datetime.datetime.now().hour
+if hour>=15:
+    r+=1
+elif hour<6:
+    r-=1
 days=["월","화","수","목","금","토","일"]
 list1=["월","수","금","일"]
 list2=["화","목","토"]
 print("포스텍 학내에 식당은 지곡회관(프리덤, 위즈덤, 연지)과 학생회관(오아시스) 이외에 POSCO국제관(디메들리 뷔페, 피닉스 중식당), 포항가속기연구소, 포항산업과학연구원(RIST) 등에 위치하고 있습니다.")
 print("-----학생식당-----")
+
+    
 print(days[r])
 print("------------------")
 print("운영 시간 :  조식(breakfast) 07:30 ~ 09:30	중식(lunch) 11:30 ~ 13:30	석식(dinner) 17:30 ~ 19:00")

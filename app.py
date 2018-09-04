@@ -65,6 +65,11 @@ def message():
         day_tag2 = result.select('td.bg0')
         
         r = datetime.datetime.today().weekday()
+        hour = datetime.datetime.now().hour
+        if hour>=15:
+            r+=1
+        elif hour<6:
+            r-=1
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -121,6 +126,11 @@ def message():
         #print(result)
         bab_tag = result.select('td.pointer.txtheight')
         r = datetime.datetime.today().weekday()
+        hour = datetime.datetime.now().hour
+        if hour>=15:
+            r+=1
+        elif hour<6:
+            r-=1
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -137,6 +147,11 @@ def message():
         #print(result)
         bab_tag = result.select('div.card-body.store-card-menu-body > div > ul > li > div')
         r = datetime.datetime.today().weekday()
+        hour = datetime.datetime.now().hour
+        if hour>=15:
+            r+=1
+        elif hour<6:
+            r-=1
         days=["월","화","수","목","금","토","일"]
         bab_dict={}
         if days[r] == "월":
@@ -181,6 +196,11 @@ def message():
         url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
         today = datetime.datetime.now().strftime("%Y-%m-%d")
         r = datetime.datetime.today().weekday()
+        hour = datetime.datetime.now().hour
+        if hour>=15:
+            r+=1
+        elif hour<6:
+            r-=1
         days=["월","화","수","목","금","토","일"]
         payloads = {"storeCd": "05600", "cafeCd": "01", "menuDate": today}
         res = requests.post(url, data= payloads).json()
