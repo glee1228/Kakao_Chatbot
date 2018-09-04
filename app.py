@@ -154,36 +154,12 @@ def message():
             r-=1
         days=["월","화","수","목","금","토","일"]
         bab_dict={}
-        if days[r] == "월":
-                bab_dict ={
-                'breakfast' : bab_tag[r].text,
-                'lunch' : bab_tag[r+1].text,
-                'dinner' : bab_tag[r+2].text
-                }
-        if days[r] == "화":
-                bab_dict ={
-                'breakfast' : bab_tag[r+2].text,
-                'lunch' : bab_tag[r+3].text,
-                'dinner' : bab_tag[r+4].text
-                }
-        if days[r] == "수":
-                bab_dict ={
-                'breakfast' : bab_tag[r+4].text,
-                'lunch' : bab_tag[r+5].text,
-                'dinner' : bab_tag[r+6].text
-                }
-        if days[r] == "목":
-                bab_dict ={
-                'breakfast' : bab_tag[r+6].text,
-                'lunch' : bab_tag[r+7].text,
-                'dinner' : bab_tag[r+8].text
-                }
-        if days[r] == "금":
-                bab_dict ={
-                'breakfast' : bab_tag[r+8].text,
-                'lunch' : bab_tag[r+9].text,
-                'dinner' : bab_tag[r+10].text
-                }
+        bab_dict ={
+            'breakfast' : bab_tag[r].text,
+            'lunch' : bab_tag[r+1].text,    
+            'dinner' : bab_tag[r+2].text
+            }
+        
         return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="포항가속기연구소식당":
         url = "https://bds.bablabs.com/restaurants?campus_id=3hXYy5crHG"
