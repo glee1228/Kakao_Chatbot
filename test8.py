@@ -2,12 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 
-url = "https://ssgfoodingplus.com/fmn101.do?goTo=todayMenu&storeCd=05600"
+url = "https://bds.bablabs.com/restaurants?campus_id=3hXYy5crHG"
 res = requests.get(url)
 result = BeautifulSoup(res.content, 'html.parser')
 #print(result)
-bab_tag = result.select('#menuForm > section > article > div.menu_info')
+bab_tag = result.select('ul > li > div > div > a > img ')
 r = datetime.datetime.today().weekday()
 days=["월","화","수","목","금","토","일"]
-print(bab_tag)
+#imgs = bab_tag.get('src')
+print(bab_tag[0]['src'])
 

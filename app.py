@@ -171,7 +171,12 @@ def message():
                 }
         return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="포항가속기연구소식당":
-        return_msg = "https://s3.ap-northeast-2.amazonaws.com/bablabs/menu/689d8d6c6fc20a32dc2895dc0daa05eba93b5e1ce11cdfcb61c54aff.jpg"
+        url = "https://bds.bablabs.com/restaurants?campus_id=3hXYy5crHG"
+        res = requests.get(url)
+        result = BeautifulSoup(res.content, 'html.parser')
+        bab_tag = result.select('ul > li > div > div > a > img ')
+        bab_src = bab_tag[0]['src']
+        return_msg = bab_src
     elif user_msg =="RIST식당":
         return_msg ="https://ssgfoodingplus.com/fmn101.do?goTo=todayMenu&storeCd=05600"
     else :
