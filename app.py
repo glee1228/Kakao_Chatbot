@@ -178,7 +178,23 @@ def message():
         bab_src = bab_tag[0]['src']
         return_msg = bab_src
     elif user_msg =="RIST식당":
-        return_msg ="https://ssgfoodingplus.com/fmn101.do?goTo=todayMenu&storeCd=05600"
+        url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        r = datetime.datetime.today().weekday()
+        days=["월","화","수","목","금","토","일"]
+        payloads = {"storeCd": "05600", "cafeCd": "01", "menuDate": today}
+        res = requests.post(url, data= payloads).json()
+        breakfast=""
+        lunch=""
+        dinner=""
+        for i in range(0,len(res['result'])):
+            if res['result'][i]['meal_type_nm']=="조식":
+                breakfast+=res['result'][i]['if_menu_nm']+"\n"
+            elif res['result'][i]['meal_type_nm']=="중식":
+                lunch+=res['result'][i]['if_menu_nm']+"\n"
+            elif res['result'][i]['meal_type_nm']=="석식":
+                dinner+=res['result'][i]['if_menu_nm']+"\n"
+        return_msg ="RIST식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],breakfast,lunch,dinner)
     else :
         return_msg = "메뉴만 사용가능"
         
