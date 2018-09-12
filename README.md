@@ -1,4 +1,5 @@
-## Postech 오늘의 식단 및 로또, 영화 추천 Kakao ChatBot
+## @포스텍학식알리미 Kakao ChatBot
+#### 포항공대(포스텍)의 오늘의 식단 및 로또, 영화 추천 
 
 #### 친구 추가 방법
 http://plus.kakao.com/home/@pythonchatbot3
