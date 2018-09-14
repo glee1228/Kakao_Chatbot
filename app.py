@@ -83,40 +83,40 @@ def message():
                 }
             elif days[r] == "수":
                 bab_dict ={
-                'breakfast': bab_tag[r+5].text,
-                'lunch':bab_tag[r+6].text,
-                'dinner':bab_tag[r+7].text
+                'breakfast': bab_tag[r+4].text,
+                'lunch':bab_tag[r+5].text,
+                'dinner':bab_tag[r+6].text
                 }
             elif days[r] == "금":
-                bab_dict ={
-                'breakfast': bab_tag[r+10].text,
-                'lunch':bab_tag[r+11].text,
-                'dinner':bab_tag[r+12].text
-                }
-            elif days[r] == "일":
-                bab_dict ={
-                'breakfast': bab_tag[r+15].text,
-                'lunch':bab_tag[r+16].text,
-                'dinner':bab_tag[r+17].text
-                }
-        if days[r] in list2:
-            if days[r] == "화":
-                bab_dict ={
-                'breakfast': bab_tag[r+3].text,
-                'lunch' : bab_tag[r+4].text,
-                'dinner' : bab_tag[r+5].text
-                }
-            elif days[r] == "목":
                 bab_dict ={
                 'breakfast': bab_tag[r+8].text,
                 'lunch':bab_tag[r+9].text,
                 'dinner':bab_tag[r+10].text
                 }
+            elif days[r] == "일":
+                bab_dict ={
+                'breakfast': bab_tag[r+12].text,
+                'lunch':bab_tag[r+13].text,
+                'dinner':bab_tag[r+14].text
+                }
+        if days[r] in list2:
+            if days[r] == "화":
+                bab_dict ={
+                'breakfast': bab_tag[r+2].text,
+                'lunch' : bab_tag[r+3].text,
+                'dinner' : bab_tag[r+4].text
+                }
+            elif days[r] == "목":
+                bab_dict ={
+                'breakfast': bab_tag[r+6].text,
+                'lunch':bab_tag[r+7].text,
+                'dinner':bab_tag[r+8].text
+                }
             elif days[r] == "토":
                 bab_dict ={
-                'breakfast': bab_tag[r+13].text,
-                'lunch':bab_tag[r+14].text,
-                'dinner':bab_tag[r+15].text
+                'breakfast': bab_tag[r+10].text,
+                'lunch':bab_tag[r+11].text,
+                'dinner':bab_tag[r+12].text
                 }
         return_msg = "학생식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="교직원식당":

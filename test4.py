@@ -9,7 +9,6 @@ result = BeautifulSoup(res.content, 'html.parser')
 bab_tag = result.select('td.pointer.txtheight')
 day_tag = result.select('td.bg1')
 day_tag2 = result.select('td.bg0')
-
 r = datetime.datetime.today().weekday()
 hour = datetime.datetime.now().hour
 if hour>=15:
@@ -37,39 +36,13 @@ if days[r] in list1:
         print("----------------")
     elif days[r] =="수":
         print("-------조식---------")
-        print(bab_tag[r+5].text)
+        print(bab_tag[r+4].text)
         print("-------중식---------")
-        print(bab_tag[r+6].text)
+        print(bab_tag[r+5].text)
         print("-------석식---------")
-        print(bab_tag[r+7].text)
+        print(bab_tag[r+6].text)
         print("----------------")
     elif days[r]=="금":
-        print("-------조식---------")
-        print(bab_tag[r+10].text)
-        print("-------중식---------")
-        print(bab_tag[r+11].text)
-        print("-------석식---------")
-        print(bab_tag[r+12].text)
-        print("----------------")
-    elif days[r] =="일":
-        print("-------조식---------")
-        print(bab_tag[r+15].text)
-        print("-------중식---------")
-        print(bab_tag[r+16].text)
-        print("-------석식---------")
-        print(bab_tag[r+17].text)
-        print("----------------")
-        
-if days[r] in list2:
-    if days[r] == "화":
-        print("-------조식---------")
-        print(bab_tag[r+3].text)
-        print("-------중식---------")
-        print(bab_tag[r+4].text)
-        print("-------석식---------")
-        print(bab_tag[r+5].text)
-        print("----------------")
-    elif days[r] =="목":
         print("-------조식---------")
         print(bab_tag[r+8].text)
         print("-------중식---------")
@@ -77,15 +50,40 @@ if days[r] in list2:
         print("-------석식---------")
         print(bab_tag[r+10].text)
         print("----------------")
+    elif days[r] =="일":
+        print("-------조식---------")
+        print(bab_tag[r+12].text)
+        print("-------중식---------")
+        print(bab_tag[r+13].text)
+        print("-------석식---------")
+        print(bab_tag[r+14].text)
+        print("----------------")
+        
+if days[r] in list2:
+    if days[r] == "화":
+        print("-------조식---------")
+        print(bab_tag[r+2].text)
+        print("-------중식---------")
+        print(bab_tag[r+3].text)
+        print("-------석식---------")
+        print(bab_tag[r+4].text)
+        print("----------------")
+    elif days[r] =="목":
+        print("-------조식---------")
+        print(bab_tag[r+6].text)
+        print("-------중식---------")
+        print(bab_tag[r+7].text)
+        print("-------석식---------")
+        print(bab_tag[r+8].text)
+        print("----------------")
     elif days[r]=="토":
         print("-------조식---------")
-        print(bab_tag[r+13].text)
+        print(bab_tag[r+10].text)
         print("-------중식---------")
-        print(bab_tag[r+14].text)
+        print(bab_tag[r+11].text)
         print("-------석식---------")
-        print(bab_tag[r+15].text)
+        print(bab_tag[r+12].text)
         print("----------------")
 #012/678/121314/181920
 #345/91011/151617
 #day_tag2 화,목,토
-
