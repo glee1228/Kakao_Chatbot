@@ -135,11 +135,14 @@ def message():
         list1=["월","수","금","일"]
         list2=["화","목","토"]
         #print("포스텍 학내에 식당은 지곡회관(프리덤, 위즈덤, 연지)과 학생회관(오아시스) 이외에 POSCO국제관(디메들리 뷔페, 피닉스 중식당), 포항가속기연구소, 포항산업과학연구원(RIST) 등에 위치하고 있습니다.")
-        bab_dict={}
-        bab_dict={
-                'lunch':bab_tag[r].text
-            }
-        return_msg = "교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
+        if days[r]=="토"or days[r]=="일":
+            return_msg = "주말에는 교직원 식당을 운영하지 않습니다."
+        else :
+            bab_dict={}
+            bab_dict={
+                    'lunch':bab_tag[r].text
+                }
+            return_msg = "교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
     elif user_msg =="인재창조원식당":
         r = datetime.datetime.today().weekday()
         now = datetime.datetime.now()
@@ -177,7 +180,7 @@ def message():
                 else :
                     day-=1
         if days[r]=="토" or days[r]=="일":
-            return_msg = "주말에는 인재창조원 식당이 운영하지않습니다."
+            return_msg = "주말에는 인재창조원 식당을 운영하지않습니다."
         else : 
             url = "https://www.poswel.co.kr/fmenu/three_days.php?area_code=A4&"
             payloads = "nyear=%d&nmonth=%02d&reqday=%02d"%(year,month,day)
