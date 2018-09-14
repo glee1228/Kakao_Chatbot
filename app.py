@@ -141,12 +141,15 @@ def message():
             }
         return_msg = "교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
     elif user_msg =="인재창조원식당":
+        r = datetime.datetime.today().weekday()
         now = datetime.datetime.now()
         year = now.year
         month = now.month
         day = now.day
         hour = now.hour
+        days=["월","화","수","목","금","토","일"]
         if hour>=16:
+            r+=1
             if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
                 if day==31:
                     month+=1
@@ -160,6 +163,7 @@ def message():
                 else :
                     day+=1
         elif hour<6:
+            r-=1
             if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
                 if day==1:
                     month-=1
@@ -172,45 +176,48 @@ def message():
                     day=30
                 else :
                     day-=1
-        url = "https://www.poswel.co.kr/fmenu/three_days.php?area_code=A4&"
-        payloads = "nyear=%d&nmonth=%02d&reqday=%02d"%(year,month,day)
-        url = url+payloads
-        print(url)
-        res = requests.get(url)
-        result = BeautifulSoup(res.content, 'html.parser')
-        bab_tag = result.select('strong.blue')
-        bab2_tag = result.select('div.list_3day_menu_tit_explain > span')
-        r = datetime.datetime.today().weekday()
-        today = datetime.datetime.now().strftime("%Y-%m-%d")
-        days=["월","화","수","목","금","토","일"]
-        bab_list =bab_tag[3].text.split() #아침,한식, 3000원
-        if bab_list[0]=="저녁" :
-            print("점심이 두개입니다")
-            bab_dict={}
-            bab_dict ={
-                'breakfast' : bab2_tag[0].text,
-                'lunch' : bab2_tag[2].text,
-                'lunch2' : bab2_tag[4].text,
-                'dinner' : bab2_tag[6].text
-                }
-            return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식1-------\n{2}\n-------중식2-------\n{3}\n-------석식-------\n{4}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['lunch2'],bab_dict['dinner'])
-  
-        else :
-            print("점심이 한개입니다")
-            bab_dict={}
-            bab_dict ={
-                'breakfast' : bab2_tag[0].text,
-                'lunch' : bab2_tag[2].text,    
-                'dinner' : bab2_tag[4].text
-                }
-            return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
+        if days[r]=="토" or days[r]=="일":
+            return_msg = "주말에는 인재창조원 식당이 운영하지않습니다."
+        else : 
+            url = "https://www.poswel.co.kr/fmenu/three_days.php?area_code=A4&"
+            payloads = "nyear=%d&nmonth=%02d&reqday=%02d"%(year,month,day)
+            url = url+payloads
+            print(url)
+            res = requests.get(url)
+            result = BeautifulSoup(res.content, 'html.parser')
+            bab_tag = result.select('strong.blue')
+            bab2_tag = result.select('div.list_3day_menu_tit_explain > span')
+            r = datetime.datetime.today().weekday()
+            today = datetime.datetime.now().strftime("%Y-%m-%d")
+            
+            bab_list =bab_tag[3].text.split() #아침,한식, 3000원
+            if bab_list[0]=="저녁" :
+                bab_dict={}
+                bab_dict ={
+                    'breakfast' : bab2_tag[0].text,
+                    'lunch' : bab2_tag[2].text,
+                    'lunch2' : bab2_tag[4].text,
+                    'dinner' : bab2_tag[6].text
+                    }
+                return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식1-------\n{2}\n-------중식2-------\n{3}\n-------석식-------\n{4}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['lunch2'],bab_dict['dinner'])
+            else :
+                bab_dict={}
+                bab_dict ={
+                    'breakfast' : bab2_tag[0].text,
+                    'lunch' : bab2_tag[2].text,    
+                    'dinner' : bab2_tag[4].text
+                    }
+                return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="포항가속기연구소식당":
         url = "https://bds.bablabs.com/restaurants?campus_id=3hXYy5crHG"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
         bab_tag = result.select('ul > li > div > div > a > img ')
-        bab_src = bab_tag[0]['src']
-        return_msg = bab_src
+        if not bab_tag :
+            return_msg = "식당에서 업데이트한 식단이 없습니다"
+        else :
+            bab_src = bab_tag[0]['src']
+            return_msg = bab_src
     elif user_msg =="RIST식당":
         url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
         today = datetime.datetime.now().strftime("%Y-%m-%d")
