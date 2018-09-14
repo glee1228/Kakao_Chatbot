@@ -47,9 +47,16 @@ days=["월","화","수","목","금","토","일"]
 bab_list =bab_tag[3].text.split() #아침,한식, 3000원
 if bab_list[0]=="저녁" :
     print("점심이 두개입니다")
+    print(bab2_tag[0].text)
+    print(bab2_tag[2].text)
+    print(bab2_tag[4].text)
+    print(bab2_tag[6].text)
 else :
     print("점심이 한개입니다")
+    print(bab2_tag[0].text)
+    print(bab2_tag[2].text)
+    print(bab2_tag[4].text)
 
 #print(bab_tag[0].text.split())
-#print(bab_tag2)
+
 print(today)
