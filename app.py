@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import datetime
 
 app = Flask(__name__)
+heroku =False
 
 @app.route('/')
 def hello():
@@ -68,8 +69,7 @@ def message():
         hour = datetime.datetime.now().hour
         if hour>=15:
             r+=1
-        elif hour<6:
-            r-=1
+        
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -129,8 +129,7 @@ def message():
         hour = datetime.datetime.now().hour
         if hour>=15:
             r+=1
-        elif hour<6:
-            r-=1
+        
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -166,7 +165,6 @@ def message():
                 else :
                     day+=1
         elif hour<6:
-            r-=1
             if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
                 if day==1:
                     month-=1
@@ -228,8 +226,7 @@ def message():
         hour = datetime.datetime.now().hour
         if hour>=15:
             r+=1
-        elif hour<6:
-            r-=1
+        
         days=["월","화","수","목","금","토","일"]
         payloads = {"storeCd": "05600", "cafeCd": "01", "menuDate": today}
         res = requests.post(url, data= payloads).json()
