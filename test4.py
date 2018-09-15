@@ -7,6 +7,7 @@ res = requests.get(url)
 result = BeautifulSoup(res.content, 'html.parser')
 #print(result)
 bab_tag = result.select('td.pointer.txtheight')
+b_bab_tag = result.select('td.txtheight')
 day_tag = result.select('td.bg1')
 day_tag2 = result.select('td.bg0')
 r = datetime.datetime.today().weekday()
@@ -87,3 +88,4 @@ if days[r] in list2:
 #012/678/121314/181920
 #345/91011/151617
 #day_tag2 화,목,토
+print(b_bab_tag)
