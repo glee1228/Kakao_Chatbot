@@ -68,8 +68,15 @@ def message():
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
         if hour>=15:
-            r+=1
-        
+            if r==6:
+                r=0
+            else :
+                r+=1
+        elif hour<6:
+            if r==0:
+                r=6
+            else :
+                r-=1
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -128,8 +135,15 @@ def message():
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
         if hour>=15:
-            r+=1
-        
+            if r==6:
+                r=0
+            else :
+                r+=1
+        elif hour<6:
+            if r==0:
+                r=6
+            else :
+                r-=1
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -150,8 +164,11 @@ def message():
         day = now.day
         hour = now.hour
         days=["월","화","수","목","금","토","일"]
-        if hour>=16:
-            r+=1
+        if hour>=15:
+            if r==6:
+                r=0
+            else :
+                r+=1
             if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
                 if day==31:
                     month+=1
@@ -165,6 +182,10 @@ def message():
                 else :
                     day+=1
         elif hour<6:
+            if r==0:
+                r=6
+            else :
+                r-=1
             if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
                 if day==1:
                     month-=1
@@ -177,6 +198,7 @@ def message():
                     day=30
                 else :
                     day-=1
+                    
         if days[r]=="토" or days[r]=="일":
             return_msg = "주말에는 인재창조원 식당을 운영하지않습니다."
         else : 
@@ -188,7 +210,6 @@ def message():
             result = BeautifulSoup(res.content, 'html.parser')
             bab_tag = result.select('strong.blue')
             bab2_tag = result.select('div.list_3day_menu_tit_explain > span')
-            r = datetime.datetime.today().weekday()
             today = datetime.datetime.now().strftime("%Y-%m-%d")
             
             bab_list =bab_tag[3].text.split() #아침,한식, 3000원
@@ -221,12 +242,47 @@ def message():
             return_msg = bab_src
     elif user_msg =="RIST식당":
         url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
-        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        yearmonth = datetime.datetime.now().strftime("%Y-%m-")
+        now = datetime.datetime.now()
+        month = now.month
+        day = now.day
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
         if hour>=15:
-            r+=1
-        
+            if r==6:
+                r=0
+            else :
+                r+=1
+            if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                if day==31:
+                    month+=1
+                    day=1
+                else:
+                    day+=1
+            else:
+                if day==30:
+                    month+=1
+                    day=1
+                else :
+                    day+=1
+        elif hour<6:
+            if r==0:
+                r=6
+            else :
+                r-=1
+            if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+                if day==1:
+                    month-=1
+                    day=31
+                else:
+                    day-=1
+            else:
+                if day==1:
+                    month-=1
+                    day=30
+                else :
+                    day-=1
+        today = yearmonth+str(day)
         days=["월","화","수","목","금","토","일"]
         payloads = {"storeCd": "05600", "cafeCd": "01", "menuDate": today}
         res = requests.post(url, data= payloads).json()
