@@ -72,11 +72,7 @@ def message():
                 r=0
             else :
                 r+=1
-        elif hour<6:
-            if r==0:
-                r=6
-            else :
-                r-=1
+        
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -139,11 +135,7 @@ def message():
                 r=0
             else :
                 r+=1
-        elif hour<6:
-            if r==0:
-                r=6
-            else :
-                r-=1
+        
         days=["월","화","수","목","금","토","일"]
         list1=["월","수","금","일"]
         list2=["화","목","토"]
@@ -181,23 +173,7 @@ def message():
                     day=1
                 else :
                     day+=1
-        elif hour<6:
-            if r==0:
-                r=6
-            else :
-                r-=1
-            if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
-                if day==1:
-                    month-=1
-                    day=31
-                else:
-                    day-=1
-            else:
-                if day==1:
-                    month-=1
-                    day=30
-                else :
-                    day-=1
+        
                     
         if days[r]=="토" or days[r]=="일":
             return_msg = "주말에는 인재창조원 식당을 운영하지않습니다."
@@ -265,23 +241,7 @@ def message():
                     day=1
                 else :
                     day+=1
-        elif hour<6:
-            if r==0:
-                r=6
-            else :
-                r-=1
-            if month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
-                if day==1:
-                    month-=1
-                    day=31
-                else:
-                    day-=1
-            else:
-                if day==1:
-                    month-=1
-                    day=30
-                else :
-                    day-=1
+        
         today = yearmonth+str(day)
         days=["월","화","수","목","금","토","일"]
         payloads = {"storeCd": "05600", "cafeCd": "01", "menuDate": today}
