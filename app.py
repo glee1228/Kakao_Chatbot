@@ -5,6 +5,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import datetime
+import re
 
 app = Flask(__name__)
 heroku =False
@@ -16,7 +17,7 @@ def hello():
 def keyboard():
     keyboard =  {
     "type" : "buttons",
-    "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]}
+    "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","지곡회관(푸드코트)","포항가속기연구소식당","RIST식당","영화추천"]}
     return jsonify(keyboard)
     
     
@@ -25,13 +26,8 @@ def message():
     user_msg = request.json['content']
     img_bool = False
     if user_msg =="메뉴추천":
-        menu =["RIST식당","학생회관식당","포항가속기연구소식당","RIST식당","지곡회관(학생)","지곡회관(교직원)","학생회관매점","인재창조원식당"]
+        menu =["RIST식당","학생회관식당","포항가속기연구소식당","RIST식당","지곡회관(학생)","지곡회관(교직원)","지곡회관(푸드코트)","학생회관매점","인재창조원식당"]
         return_msg = random.choice(menu)
-        
-    elif user_msg =="로또뽑기":
-        numbers = list(range(1,46))
-        pick = random.sample(numbers,6)
-        return_msg = str(sorted(pick))
     
     elif user_msg =="영화추천":
         img_bool = True
@@ -257,6 +253,62 @@ def message():
             elif res['result'][i]['meal_type_nm']=="석식":
                 dinner+=res['result'][i]['if_menu_nm']+"\n"
         return_msg ="RIST식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],breakfast,lunch,dinner)
+    elif user_msg=='지곡회관(푸드코트)':
+        preurl = "http://fd.postech.ac.kr/bbs/board.php?bo_table=food_court&page=1"
+        res = requests.get(preurl)
+        result = BeautifulSoup(res.content, 'html.parser')
+        post_tag = result.select('table.board_list > tr > td')
+        postnum = int(post_tag[0].text.split()[0])+2
+        posturl = "http://fd.postech.ac.kr/bbs/board.php?bo_table=food_court&wr_id="
+        url = posturl+str(postnum)+"&page=1"
+        #print(url)
+        res2 = requests.get(url)
+        result2 = BeautifulSoup(res2.content, 'html.parser')
+        bab_tag = result2.select('tbody > tr > td')
+        r = datetime.datetime.today().weekday()
+        hour = datetime.datetime.now().hour
+        days=["월","화","수","목","금","토","일"]
+        if hour>=15:
+            if r==6:
+                r=0
+            else :
+                r+=1
+        mimi=[]
+        ddungs=[]
+        hansik=[]
+        yangsik=[]
+        
+        
+        ddungs_tag=bab_tag[7].text
+        ddungs_menu=" ".join(re.findall(r"[가-힣0-9,]+", ddungs_tag))
+        #print(ddungs_menu)
+        
+        hansik_breakfast_tag=bab_tag[8].text
+        hansik_breakfast_menu=" ".join(re.findall(r"[가-힣0-9,(/)]+", hansik_breakfast_tag))
+        #print(hansik_breakfast_menu)
+        
+        hansik_dinner_tag=bab_tag[12].text
+        hansik_dinner_menu=" ".join(re.findall(r"[가-힣0-9,:(/)]+", hansik_dinner_tag))
+        #print(hansik_dinner_menu)
+        
+        mimi_tag = bab_tag[11].text
+        mimi_menu=" ".join(re.findall(r"[가-힣0-9,:()]+", mimi_tag))
+        #print(mimi_menu)
+        
+        yangsik_tag = bab_tag[13].text
+        yangsik_menu =" ".join(re.findall(r"[가-힣0-9,(/)]+",yangsik_tag))
+        #print(yangsik_menu)
+        
+        bab_dict={
+            'ddungs': ddungs_menu,
+            'hansik_breakfast':hansik_breakfast_menu,
+            'hansik_dinner':hansik_dinner_menu,
+            'mimi':mimi_menu,
+            'yangsik':yangsik_menu
+        }
+        
+        return_msg = "지곡회관 푸드코트/{0}요일\n-------뚱스밥버거(조,중,석식)-------\n{1}\n-------한식(조식)-------\n{2}\n-------한식(중,석식)-------\n{3}\n-------미미짬뽕(중,석식)-------\n{4}\n-------양식(중,석식)-------\n{5}".format(days[r],bab_dict['ddungs'],bab_dict['hansik_breakfast'],bab_dict['hansik_dinner'],bab_dict['mimi'],bab_dict['yangsik'])
+
     else :
         return_msg = "메뉴만 사용가능"
         
@@ -273,7 +325,7 @@ def message():
         },
         "keyboard":{
             "type":"buttons",
-            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
+            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","지곡회관(푸드코트)","포항가속기연구소식당","RIST식당","영화추천"]
         }
         }
     else :
@@ -283,7 +335,7 @@ def message():
         },
         "keyboard":{
             "type":"buttons",
-            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
+            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","지곡회관(푸드코트)","포항가속기연구소식당","RIST식당","영화추천"]
         }
         }
     return jsonify(return_json)
