@@ -16,7 +16,7 @@ def hello():
 def keyboard():
     keyboard =  {
     "type" : "buttons",
-    "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]}
+    "buttons" : ["메뉴추천","인재창조원식당","학생식당","교직원식당","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]}
     return jsonify(keyboard)
     
     
@@ -25,7 +25,7 @@ def message():
     user_msg = request.json['content']
     img_bool = False
     if user_msg =="메뉴추천":
-        menu =["RIST식당","학생회관식당","포항가속기연구소식당","RIST식당","지곡회관(학생)","지곡회관(교직원)","학생회관매점","인재창조원식당"]
+        menu =["RIST식당","학생회관식당","포항가속기연구소식당","RIST식당","학생식당","교직원식당","학생회관매점","인재창조원식당"]
         return_msg = random.choice(menu)
         
     elif user_msg =="로또뽑기":
@@ -56,7 +56,7 @@ def message():
         return_msg = "%s/평점:%s/예매율:%s%% "% (pick_movie['title'],pick_movie['star'],pick_movie['reserve'])
         return_img = pick_movie['img']
         
-    elif user_msg =="지곡회관(학생)":
+    elif user_msg =="지학생식당":
         url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%ED%95%99%EC%83%9D"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
@@ -121,8 +121,8 @@ def message():
                 'lunch':bab_tag[r+11].text,
                 'dinner':bab_tag[r+12].text
                 }
-        return_msg = "지곡회관 학생식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
-    elif user_msg =="지곡회관(교직원)":
+        return_msg = "지고학생식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
+    elif user_msg =="교직원식당":
         url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
@@ -147,7 +147,7 @@ def message():
             bab_dict={
                     'lunch':bab_tag[r].text
                 }
-            return_msg = "지곡회관 교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
+            return_msg = "교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
     elif user_msg =="인재창조원식당":
         r = datetime.datetime.today().weekday()
         now = datetime.datetime.now()
@@ -273,7 +273,7 @@ def message():
         },
         "keyboard":{
             "type":"buttons",
-            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
+            "buttons" : ["메뉴추천","인재창조원식당","학생식당","교직원식당","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
         }
         }
     else :
@@ -283,9 +283,9 @@ def message():
         },
         "keyboard":{
             "type":"buttons",
-            "buttons" : ["메뉴추천","인재창조원식당","지곡회관(학생)","지곡회관(교직원)","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
+            "buttons" : ["메뉴추천","인재창조원식당","학생식당","교직원식당","포항가속기연구소식당","RIST식당","로또뽑기","영화추천"]
         }
         }
     return jsonify(return_json)
     
-app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',8080)))
+ app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',8080)))
