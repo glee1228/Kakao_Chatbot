@@ -63,7 +63,7 @@ def message():
         
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
-        if hour>=15:
+        if hour>=14:
             if r==6:
                 r=0
             else :
@@ -126,7 +126,7 @@ def message():
         bab_tag = result.select('td.pointer.txtheight')
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
-        if hour>=15:
+        if hour>=14:
             if r==6:
                 r=0
             else :
@@ -152,7 +152,7 @@ def message():
         day = now.day
         hour = now.hour
         days=["월","화","수","목","금","토","일"]
-        if hour>=15:
+        if hour>=14:
             if r==6:
                 r=0
             else :
@@ -220,7 +220,7 @@ def message():
         day = now.day
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
-        if hour>=15:
+        if hour>=14:
             if r==6:
                 r=0
             else :
@@ -268,7 +268,7 @@ def message():
         r = datetime.datetime.today().weekday()
         hour = datetime.datetime.now().hour
         days=["월","화","수","목","금","토","일"]
-        if hour>=15:
+        if hour>=14:
             if r==6:
                 r=0
             else :
