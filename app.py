@@ -154,7 +154,7 @@ def message():
                 if "".join(re.findall(r"[월화수목금]+".format(days[r]), bab_tag))==days[r]:
                     bab_check=True
             if return_msg=="":
-                return_msg="오늘의 식단 정보가 없습니다."
+                return_msg="지곡회관(교직원식당)\n{0}요일의 식단 정보가 없습니다.".format(days[r])
     elif user_msg =="인재창조원식당":
         r = datetime.datetime.today().weekday()
         now = datetime.datetime.now()
