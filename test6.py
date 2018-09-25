@@ -1,34 +1,43 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
+import re
 
 url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
 res = requests.get(url)
 result = BeautifulSoup(res.content, 'html.parser')
 #print(result)
 bab_tag = result.select('td.pointer.txtheight')
+table_tag = result.select('table.list_td.tbl')
+bab_area = result.find("table",
+			{"class": "list_td"}
+	        ).find_all("td")
 r = datetime.datetime.today().weekday()
+hour = datetime.datetime.now().hour
+if hour>=14:
+    if r==6:
+        r=0
+    else :
+        r+=1
 days=["월","화","수","목","금","토","일"]
-list1=["월","수","금","일"]
-list2=["화","목","토"]
-print("포스텍 학내에 식당은 지곡회관(프리덤, 위즈덤, 연지)과 학생회관(오아시스) 이외에 POSCO국제관(디메들리 뷔페, 피닉스 중식당), 포항가속기연구소, 포항산업과학연구원(RIST) 등에 위치하고 있습니다.")
-print("-----교직원식당-----")
-print(days[r])
-print("운영시간 : 11:50 ~ 13:00")
-print("------------------")
-if days[r] in "월":
-    print(bab_tag[r].text)
-elif days[r] in "화":
-    print(bab_tag[r].text)
-elif days[r] in "수":
-    print(bab_tag[r].text)
-elif days[r] in "목":
-    print(bab_tag[r].text)
-elif days[r] in "금":
-    print(bab_tag[r].text)
-elif days[r] in "토":
-    print(bab_tag[r].text)
-elif days[r] in "일":
-    print(bab_tag[r].text)
+bab_check=False
+return_msg=""
+#print("포스텍 학내에 식당은 지곡회관(프리덤, 위즈덤, 연지)과 학생회관(오아시스) 이외에 POSCO국제관(디메들리 뷔페, 피닉스 중식당), 포항가속기연구소, 포항산업과학연구원(RIST) 등에 위치하고 있습니다.")
+if days[r]=="토"or days[r]=="일":
+    return_msg = "주말에는 교직원 식당을 운영하지 않습니다."
+else :
+    for bab_index in bab_area:
+        bab_tag=bab_index.text
+        if bab_check==True:
+            bab_dict={}
+            bab_dict={
+                    'lunch':bab_index.text
+                }
+            return_msg = "지곡회관 교직원식당/{0}요일\n-------중식-------\n{1}\n".format(days[r],bab_dict['lunch'])
+            break
+        if "".join(re.findall(r"[월화수목금]+".format(days[r]), bab_tag))==days[r]:
+            bab_check=True
+    if return_msg=="":
+        return_msg="오늘의 식단 정보가 없습니다."
 
 
