@@ -46,6 +46,7 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 days=["월","화","수","목","금","토","일"]
 print(bab_tag)
 bab_list =bab_tag[2].text.split() #아침,한식, 3000원
+print(bab2_tag)
 if bab_list[0]=="점심" :
     print("점심이 두개입니다")
     print(bab2_tag[0].text)
@@ -60,4 +61,4 @@ else :
 
 #print(bab_tag[0].text.split())
 
-print(today)
+print(days[r])
