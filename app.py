@@ -194,7 +194,7 @@ def message():
             bab_tag = result.select('strong.blue')
             bab2_tag = result.select('div.list_3day_menu_tit_explain > span')
             today = datetime.datetime.now().strftime("%Y-%m-%d")
-            print(bab_tag)
+            #print(bab_tag)
             bab_list =bab_tag[2].text.split() #아침,한식, 3000원
             if bab_list[0]=="점심" :
                 bab_dict={}
