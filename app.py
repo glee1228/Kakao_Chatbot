@@ -218,11 +218,15 @@ def message():
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
         bab_tag = result.select('ul > li > div > div > a > img ')
-        if not bab_tag :
-            return_msg = "식당에서 업데이트한 식단이 없습니다"
-        else :
+        bab_tag2 = result.select('div.card.card-menu > div > div.card-text')
+        bab_url = bab_tag2[2].text
+        if bab_tag :
             bab_src = bab_tag[0]['src']
             return_msg = bab_src
+        elif bab_url :
+            return_msg = bab_url
+        else :
+            return_msg = "식당에서 업데이트한 식단이 없습니다"
     elif user_msg =="RIST식당":
         url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
         yearmonth = datetime.datetime.now().strftime("%Y-%m-")
