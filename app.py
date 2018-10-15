@@ -214,17 +214,13 @@ def message():
                     }
                 return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="포항가속기연구소식당":
-        url = "https://bds.bablabs.com/restaurants?campus_id=3hXYy5crHG"
+        url = "https://bds.bablabs.com/restaurants/JR2kH4qeLU0GooT9?campus_id=3hXYy5crHG"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
-        bab_tag = result.select('ul > li > div > div > a > img ')
-        bab_tag2 = result.select('div.card.card-menu > div > div.card-text')
-        bab_url = bab_tag2[2].text
+        bab_tag = result.select('div.card.card-menu > div > div.card-text')
+        bab_src = bab_tag[0].text
         if bab_tag :
-            bab_src = bab_tag[0]['src']
             return_msg = bab_src
-        elif bab_url :
-            return_msg = bab_url
         else :
             return_msg = "식당에서 업데이트한 식단이 없습니다"
     elif user_msg =="RIST식당":
