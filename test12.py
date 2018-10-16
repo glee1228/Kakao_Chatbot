@@ -2,27 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 
-url = 'http://pal.postech.ac.kr/'
-headers = {
-    'Referer': 'http://pal.postech.ac.kr/Board.pal?top=6&sub=12&sub2=0&pageMode=pal&method=boardList&brd_id=pal_cafeteria',             # 네이버 크롤링 시, Referer 필수이기에 User-Agent 재선언
-    'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 '
-    '(KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'), 
-     
-}
+url = 'http://pal.postech.ac.kr/Board.pal?top=6&sub=12&sub2=0&pageMode=pal&method=boardList&brd_id=pal_cafeteria'
+res = requests.get(url)
+result = BeautifulSoup(res.content, 'html.parser')
+bab_tag = result.select('table > tbody > tr')
+brd_num = str(bab_tag[0]['brd_num'])
+url2 = 'http://pal.postech.ac.kr/Board.pal?top=6&sub=12&sub2=0&method=boardView&pageMode=pal&mode=&brd_id=pal_cafeteria&brd_num={0}&currentPage=1&user_browser=msie_false&search_type=brd_subject&search_text=#'.format(brd_num)
+res2 = requests.get(url2)
+result2 = BeautifulSoup(res2.content,'html.parser')
+bab_tag2 = result2.select('tr > td > p > img')
 
-yearmonth = datetime.datetime.now().strftime("%Y-%m-")
-now = datetime.datetime.now()
-month = now.month
-day = now.day
-r = datetime.datetime.today().weekday()
-hour = datetime.datetime.now().hour
-
-today = yearmonth+str("%02d"%day)
-print(today)
-days=["월","화","수","목","금","토","일"]
-payloads = {"top": "6", "sub": "12", "sub2" :"0","method":"boardView"}
-
-res = requests.get(url, headers = headers)
-res2 = requests.post(res,data = payloads)
-result = BeautifulSoup(res2, 'html.parser')
-print(result)
+print(bab_tag2[0]['src'])

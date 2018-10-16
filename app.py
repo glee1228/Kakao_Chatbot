@@ -214,15 +214,21 @@ def message():
                     }
                 return_msg = "인재창조원식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
     elif user_msg =="포항가속기연구소식당":
-        url = "https://bds.bablabs.com/restaurants/JR2kH4qeLU0GooT9?campus_id=3hXYy5crHG"
+        url = 'http://pal.postech.ac.kr/Board.pal?top=6&sub=12&sub2=0&pageMode=pal&method=boardList&brd_id=pal_cafeteria'
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
-        bab_tag = result.select('div.card.card-menu > div > div.card-text')
-        bab_src = bab_tag[0].text
-        if bab_tag :
-            return_msg = bab_src
+        bab_tag = result.select('table > tbody > tr')
+        brd_num = str(bab_tag[0]['brd_num'])
+        url2 = 'http://pal.postech.ac.kr/Board.pal?top=6&sub=12&sub2=0&method=boardView&pageMode=pal&mode=&brd_id=pal_cafeteria&brd_num={0}&currentPage=1&user_browser=msie_false&search_type=brd_subject&search_text=#'.format(brd_num)
+        res2 = requests.get(url2)
+        result2 = BeautifulSoup(res2.content,'html.parser')
+        bab_tag2 = result2.select('tr > td > p > img')
+        bab_url = bab_tag2[0]['src']
+        if bab_url :
+            return_msg = bab_url
         else :
             return_msg = "식당에서 업데이트한 식단이 없습니다"
+            
     elif user_msg =="RIST식당":
         url = 'https://ssgfoodingplus.com/fmn101.do?goTo=todayMenuJson'
         yearmonth = datetime.datetime.now().strftime("%Y-%m-")
