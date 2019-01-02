@@ -1,5 +1,6 @@
 ## @포스텍학식알리미 Kakao ChatBot
 ### 포항공대(포스텍)의 학식 알리미 챗봇
+[![license]](/LICENSE)
 
 #### 친구 추가 방법
 http://plus.kakao.com/home/@pythonchatbot3
