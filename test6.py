@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*- 
 import requests
 from bs4 import BeautifulSoup
 import datetime
 import re
 
 url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
-res = requests.get(url)
+headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
+res = requests.get(url,headers=headers)
 result = BeautifulSoup(res.content, 'html.parser')
-#print(result)
+print(result)
 bab_tag = result.select('td.pointer.txtheight')
 table_tag = result.select('table.list_td.tbl')
 bab_area = result.find("table",

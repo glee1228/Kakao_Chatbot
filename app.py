@@ -53,6 +53,8 @@ def message():
         return_img = pick_movie['img']
         
     elif user_msg =="지곡회관(학생)":
+        return_msg="http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%ED%95%99%EC%83%9D"
+        """
         url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%ED%95%99%EC%83%9D"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
@@ -118,8 +120,10 @@ def message():
                 'dinner':bab_tag[r+12].text
                 }
         return_msg = "지곡회관 학생식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],bab_dict['breakfast'],bab_dict['lunch'],bab_dict['dinner'])
+        """
     elif user_msg =="지곡회관(교직원)":
-        url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
+        return_msg="http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
+        '''url = "http://fd.postech.ac.kr/bbs/board_menu.php?bo_table=weekly&sca=%EA%B5%90%EC%A7%81%EC%9B%90"
         res = requests.get(url)
         result = BeautifulSoup(res.content, 'html.parser')
         #print(result)
@@ -155,6 +159,7 @@ def message():
                     bab_check=True
             if return_msg=="":
                 return_msg="지곡회관(교직원식당)\n{0}요일의 식단 정보가 없습니다.".format(days[r])
+        '''
     elif user_msg =="인재창조원식당":
         r = datetime.datetime.today().weekday()
         now = datetime.datetime.now()
@@ -276,7 +281,8 @@ def message():
                 dinner+=res['result'][i]['if_menu_nm']+"\n"
         return_msg ="RIST식당/{0}요일\n-------조식-------\n{1}\n-------중식-------\n{2}\n-------석식-------\n{3}\n".format(days[r],breakfast,lunch,dinner)
     elif user_msg=='지곡회관(푸드코트)':
-        preurl = "http://fd.postech.ac.kr/bbs/board.php?bo_table=food_court&page=1"
+        return_msg="http://fd.postech.ac.kr/bbs/board.php?bo_table=food_court&page=1"
+        """preurl = "http://fd.postech.ac.kr/bbs/board.php?bo_table=food_court&page=1"
         res = requests.get(preurl)
         result = BeautifulSoup(res.content, 'html.parser')
         post_tag = result.select('table.board_list > tr > td')
@@ -330,7 +336,7 @@ def message():
         }
         
         return_msg = "지곡회관 푸드코트/{0}요일\n-------뚱스밥버거(조,중,석식)-------\n{1}\n-------한식(조식)-------\n{2}\n-------한식(중,석식)-------\n{3}\n-------미미짬뽕(중,석식)-------\n{4}\n-------양식(중,석식)-------\n{5}".format(days[r],bab_dict['ddungs'],bab_dict['hansik_breakfast'],bab_dict['hansik_dinner'],bab_dict['mimi'],bab_dict['yangsik'])
-
+    """
     else :
         return_msg = "메뉴만 사용가능"
         
