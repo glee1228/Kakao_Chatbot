@@ -7,7 +7,7 @@ bs4==0.0.1
 chardet==2.2.1
 click==6.7
 colorama==0.2.5
-html5lib==0.999
+html5lib==0.999999999
 itsdangerous==0.24
 pycurl==7.19.3
 requests==2.2.1
